@@ -1,11 +1,11 @@
 
-let name = "";
+let named  = "";
 let commands = [];
 
 class Message {
-   constructor(name, commands) {
-      this.name = name;
-      if (!name) {
+   constructor(named, commands) {
+      this.name = named;
+      if (!named) {
          throw Error ("Name required.");
       }
       this.commands = commands;

@@ -8,6 +8,23 @@ const Command = require('../command.js');
 
 describe("Rover class", function() {
 
-  // 7 tests here!
+  it("constructor sets default values for mode and generatorWatts", function() {
+    let specificRover = new Rover ("position");
+    expect(specificRover.mode).toBe("NORMAL");
+    expect(specificRover.generatorWatts).toBe(110);
+  });
 
+  it("response returned by receiveMessage contains the name of the message", function() {
+    let specificRover = new Rover("position");
+    let specificMessage = specificRover.receiveMessage(new Message ("nameGiven", "commandsArrayGiven"));
+    expect(specificMessage).toHaveProperty("name")
+  })
+
+  // STUCK ON TEST 9 BELOW
+  it("response returned by receiveMessage includes two results if two commands are sent in the message", function() {
+  let specificRover = new Rover("position");
+  let commandsGiven = ["MOVE", "STATUS_CHECK"];
+  let specificMessage = specificRover.receiveMessage(new Message ("nameGiven", commandsGiven));
+  expect(specificMessage.results).toBe(["MOVE", "STATUS_CHECK"]);
+  })
 });
