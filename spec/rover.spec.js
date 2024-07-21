@@ -16,15 +16,25 @@ describe("Rover class", function() {
 
   it("response returned by receiveMessage contains the name of the message", function() {
     let specificRover = new Rover("position");
-    let specificMessage = specificRover.receiveMessage(new Message ("nameGiven", "commandsArrayGiven"));
-    expect(specificMessage).toHaveProperty("name")
+    let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+    let specificMessage = specificRover.receiveMessage(new Message ("Test message with two commands", commandsArrayGiven));
+    expect(specificMessage).toHaveProperty("message")
+    expect(specificMessage.message).toBe("Test message with two commands")
   })
 
-  // STUCK ON TEST 9 BELOW
   it("response returned by receiveMessage includes two results if two commands are sent in the message", function() {
   let specificRover = new Rover("position");
-  let commandsGiven = ["MOVE", "STATUS_CHECK"];
-  let specificMessage = specificRover.receiveMessage(new Message ("nameGiven", commandsGiven));
-  expect(specificMessage.results).toBe(["MOVE", "STATUS_CHECK"]);
+  let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+  let specificMessage = specificRover.receiveMessage(new Message ("Test message with two commands", commandsArrayGiven));
+  expect(specificMessage.results.length).toBe(2);
+  })
+
+  it("responds correctly to the status check command", function() {
+  let specificRover = new Rover(98382);
+  let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+  let specificMessage = specificRover.receiveMessage(new Message ("Test message with two commands", commandsArrayGiven));
+  expect(specificMessage.results[1].roverStatus.mode).toBe(specificRover.mode);
+  expect(specificMessage.results[1].roverStatus.position).toBe(specificRover.position);
+  expect(specificMessage.results[1].roverStatus.generatorWatts).toBe(specificRover.generatorWatts);
   })
 });

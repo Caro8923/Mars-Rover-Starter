@@ -12,11 +12,13 @@ describe("Command class", function() {
   it("constructor sets command type", function() {
     let specificCommand = new Command("commandTypeGiven", "valueGiven");
     expect(specificCommand).toHaveProperty("commandType");
+    expect(specificCommand.commandType).toBe("commandTypeGiven");
   });
 
   it("constructor sets a value passed in as the second argument", function (){
     let specificCommand = new Command("commandTypeGiven", "valueGiven");
     expect(specificCommand).toHaveProperty("value");
+    expect(specificCommand.value).toBe("valueGiven");
   });
 
 });
