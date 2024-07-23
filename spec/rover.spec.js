@@ -31,10 +31,41 @@ describe("Rover class", function() {
 
   it("responds correctly to the status check command", function() {
   let specificRover = new Rover(98382);
-  let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-  let specificMessage = specificRover.receiveMessage(new Message ("Test message with two commands", commandsArrayGiven));
-  expect(specificMessage.results[1].roverStatus.mode).toBe(specificRover.mode);
-  expect(specificMessage.results[1].roverStatus.position).toBe(specificRover.position);
-  expect(specificMessage.results[1].roverStatus.generatorWatts).toBe(specificRover.generatorWatts);
+  let commandsArrayForStatusCheck= [new Command('STATUS_CHECK')];
+  let specificMessage = specificRover.receiveMessage(new Message ("Test message for Status Check", commandsArrayForStatusCheck));
+  expect(specificMessage.results[0].completed).toBe(true);
+  expect(specificMessage.results[0].roverStatus.mode).toBe(specificRover.mode);
+  expect(specificMessage.results[0].roverStatus.position).toBe(specificRover.position);
+  expect(specificMessage.results[0].roverStatus.generatorWatts).toBe(specificRover.generatorWatts);
+  })
+
+  it("responds correctly to the mode change command", function() {
+  let specificRover = new Rover(98382);
+  let commandsArrayForModeChangeN = [new Command('MODE_CHANGE', 'NORMAL')];
+  let commandsArrayForModeChangeLP = [new Command('MODE_CHANGE', 'LOW_POWER')];
+  let falseCommandsArray = [new Command('MODE_CHANGE', 'TACOS')];
+  let specificMessageN = specificRover.receiveMessage(new Message ("Test message for Mode Change - Normal", commandsArrayForModeChangeN));
+  expect(specificMessageN.results[0].completed).toBe(true);
+  expect(specificRover.mode).toBe("NORMAL")
+  let specificMessageLP = specificRover.receiveMessage(new Message ("Test message for Mode Change - Low Power", commandsArrayForModeChangeLP));
+  expect(specificMessageLP.results[0].completed).toBe(true);
+  expect(specificRover.mode).toBe("LOW_POWER")
+  let wrongMessage = specificRover.receiveMessage(new Message ("Test message for False Mode Change", falseCommandsArray));
+  expect(wrongMessage.results[0].completed).toBe(false);
+  })
+
+  it("responds with a false completed value when attempting to move in LOW_POWER mode", function(){
+  let specificRover = new Rover(98382, "LOW_POWER");
+  let commandsArrayForMove = [new Command('MOVE', 90000)];
+  let specificMessage = specificRover.receiveMessage(new Message ("Test message for Move", commandsArrayForMove));
+  expect(specificMessage.results[0].completed).toBe(false)
+  })
+
+  it("responds with the position for the move command", function(){
+  let specificRover = new Rover(98382);
+  let commandsArrayForMove = [new Command('MOVE', 90000)];
+  let specificMessage = specificRover.receiveMessage(new Message ("Test message for Move", commandsArrayForMove));
+  expect(specificMessage.results[0].completed).toBe(true);
+  expect(specificRover.position).toBe(90000);
   })
 });
