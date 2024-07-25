@@ -34,7 +34,7 @@ class Rover {
                entry.completed = false;
             } else {
                this.position = message.commands[i].value;
-            }
+            } 
          }
       
          response.results.push(entry);

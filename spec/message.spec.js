@@ -21,4 +21,4 @@ describe("Message class", function() {
             let message = new Message ("Test message with two commands", commandsArray);
             expect(message.commands).toBe(commandsArray);
         })
-});
+}); 

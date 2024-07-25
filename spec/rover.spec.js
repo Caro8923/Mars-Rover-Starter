@@ -57,7 +57,7 @@ describe("Rover class", function() {
   let response = rover.receiveMessage(message);
   expect(response.results[0].completed).toBe(false);
   expect(rover.position).toBe(98382);
-  });
+  }); 
 
   it("responds with the position for the move command", function(){
   let rover = new Rover(98382);
