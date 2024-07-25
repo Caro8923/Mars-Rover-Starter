@@ -11,16 +11,14 @@ describe("Message class", function() {
         });
 
         it ("constructor sets name", function(){
-            let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-            let specificMessage = new Message ("Test message with two commands", commandsArrayGiven);
-            expect(specificMessage).toHaveProperty("name");
-            expect(specificMessage.name).toBe("Test message with two commands");
+            let commandsArray = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+            let message = new Message ("Test message with two commands", commandsArray);
+            expect(message.name).toBe("Test message with two commands");
         })
 
         it ("contains a commands array passed into the constructor as the second argument", function(){
-            let commandsArrayGiven = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
-            let specificMessage = new Message ("Test message with two commands", commandsArrayGiven);
-            expect(specificMessage).toHaveProperty("commands");
-            expect(specificMessage.commands).toBe(commandsArrayGiven);
+            let commandsArray = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+            let message = new Message ("Test message with two commands", commandsArray);
+            expect(message.commands).toBe(commandsArray);
         })
 });
